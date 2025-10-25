@@ -1,0 +1,3422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER SOP HANDBOOK</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #4ba254 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .save-download-section {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .save-btn,
+        .download-btn {
+            background: #4ba254;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover,
+        .download-btn:hover {
+            background: #3d8f44;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .save-btn {
+            background: #667eea;
+        }
+
+        .save-btn:hover {
+            background: #5568d3;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #4ba254 100%);
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 0 auto 30px auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .header-center h1 {
+            color: #222;
+            font-size: 3.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-center h1::before {
+            content: "📋 ";
+        }
+
+        .header-center p {
+            color: #070000;
+            font-size: 30px;
+            margin-top: 1;
+        }
+
+        .header-info {
+            margin-top: 10px;
+            border-radius: 10px;
+            padding: 10px 300px;
+            width: fit-content;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            font-size: 20px;
+            color: #0a0101;
+        }
+
+        .header-info span {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+        }
+
+        .header-info span:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .main-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .main-btn {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 3px solid transparent;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .main-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .main-btn:nth-child(1) .icon {
+            animation: slideLeftRight 2s ease-in-out infinite;
+        }
+
+        .main-btn:nth-child(2) .icon {
+            animation: slideLeftRight 2s ease-in-out infinite;
+        }
+
+        .main-btn:nth-child(3) .icon {
+            animation: slideUpDown 2s ease-in-out infinite;
+        }
+
+        @keyframes slideLeftRight {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        @keyframes slideUpDown {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .main-btn h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .main-btn.active h2,
+        .main-btn.active p {
+            color: white;
+        }
+
+        .main-btn p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .content-area {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .content-area.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subsection-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        .subsection-btn {
+            padding: 12px 24px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .subsection-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .subsection-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .sop-content {
+            display: none;
+        }
+
+        .sop-content.active {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .detail-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 10px;
+        }
+
+        .detail-btn {
+            padding: 15px 25px;
+            background: white;
+            border: 2px solid #5568d3;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #5568d3;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .detail-btn:hover {
+            background: #5568d3;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(85, 104, 211, 0.3);
+        }
+
+        .detail-btn.active {
+            background: #5568d3;
+            color: white;
+            box-shadow: 0 4px 12px rgba(85, 104, 211, 0.4);
+        }
+
+        .sop-step {
+            background: #f9f9f9;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .sop-step h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .step-description {
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .step-image-container {
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .step-image-container {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0e7ff 100%);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px dashed #667eea;
+            margin: 15px 0;
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+
+        .route-map {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 8px;
+        }
+
+        .route-map h4 {
+            color: #5568d3;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .route-steps {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .route-step {
+            background: #5568d3;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 2px solid #5568d3;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .route-arrow {
+            color: #5568d3;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #f5f5f5;
+            color: #333;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #4ba254;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: none;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .header-center h1 {
+                font-size: 1.8em;
+            }
+
+            .save-download-section {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .route-steps {
+                flex-direction: column;
+            }
+
+            .header-info {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="save-download-section">
+        <button class="save-btn" onclick="saveAllChanges()">💾 Save All</button>
+        <button class="download-btn" onclick="downloadHTML()">⬇️ Download</button>
+    </div>
+
+    <div class="notification" id="notification">Changes saved successfully! ✓</div>
+
+    <div class="header">
+        <div class="header-center">
+            <h1>Master SOP Handbook</h1>
+            <p>Standard Operating Procedures Dashboard</p>
+        </div>
+
+        <div class="header-info">
+            <span>Created By: Rayappa Raju</span>
+            <span>Team: L1 Connect hub support</span>
+            <span>October 2025</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-buttons">
+            <div class="main-btn" onclick="showSection('hub-portal')">
+                <div class="icon">🏬</div>
+                <h2>Hub Portal</h2>
+                <p>Inbound & Outbound Operations</p>
+            </div>
+            <div class="main-btn" onclick="showSection('rider-app')">
+                <div class="icon">🛵</div>
+                <h2>Rider App</h2>
+                <p>Delivery & Pickup Flows</p>
+            </div>
+            <div class="main-btn" onclick="showSection('dashboard')">
+                <div class="icon">📊</div>
+                <h2>Dashboard</h2>
+                <p>Live Tracking & Reports</p>
+            </div>
+            <div class="main-btn" onclick="showSection('exception')">
+                <div class="icon">📝</div>
+                <h2>Exception Portal</h2>
+                <p>Shipment Tally & Exceptions</p>
+            </div>
+            <div class="main-btn" onclick="showSection('valinor')">
+                <div class="icon">🖥</div>
+                <h2>Valinor</h2>
+                <p>Login Portal</p>
+            </div>
+            <div class="main-btn" onclick="showSection('glossary')">
+                <div class="icon">🔖</div>
+                <h2>Glossary</h2>
+                <p>Terms & Definitions</p>
+            </div>
+        </div>
+
+        <div id="hub-portal" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🏬 Hub Portal Activities</h2>
+
+            <div class="subsection-nav">
+                <button class="subsection-btn" onclick="showSubsection('hub', 'inbound', this)">📥 Inbound
+                    Process</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'outbound', this)">📤 Outbound
+                    Process</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'lm-cluster', this)">🗺️ LM
+                    Cluster</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'help-center', this)">💬 Help
+                    Center</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'cod', this)">💰 COD Management</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'undelivered-calling', this)">📞
+                    Undelivered Shipment Calling</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'tickets', this)">🎟 Tickets</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'pincode-category', this)">🪪 Pincode
+                    Category</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'add-new-rider', this)">🧑‍🤝‍🧑 Add New
+                    Rider to Hub</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'leads-for-hiring', this)">📩 Leads for
+                    Hiring</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'rider-activity', this)">👥 Rider
+                    Activity</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'urgent-delivery', this)">🚨 Urgent
+                    Delivery Shipments</button>
+                <button class="subsection-btn" onclick="showSubsection('hub', 'ndr', this)">📦 New Delivery Request
+                    (NDR)</button>
+            </div>
+
+
+            <div id="hub-inbound" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📥 Inbound Process</h3>
+
+                <div class="detail-nav">
+                    <button class="detail-btn" onclick="showDetail('inbound', 'master-manifest', this)">1️⃣ Master
+                        Manifest Receive</button>
+                    <button class="detail-btn" onclick="showDetail('inbound', 'manifest-received', this)">2️⃣ Manifest
+                        Received</button>
+                    <button class="detail-btn" onclick="showDetail('inbound', 'sorting', this)">3️⃣ Sorting</button>
+                </div>
+
+                <div id="inbound-master-manifest" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">1.1 </span>Receiving Manifest from Master Manifest</h3>
+                        <div class="step-description">
+                            This process involves receiving manifests that arrive at the hub via Master Manifest (MM).
+                            The Hub Incharge must verify and accept incoming shipments.
+                        </div>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/g225y7sH/1-1.png" alt="MM Reaching Hub Button">
+                        </div>
+                        <p><strong>Step 1:</strong> Navigate to Hub Portal and click on "MM Reaching Hub".</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder2.png" alt="Receive on Trip Button">
+                        </div>
+                        <p><strong>Step 2:</strong> Click on "Receive on Trip".</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder3.png" alt="Scan Vehicle Seal">
+                        </div>
+                        <p><strong>Step 3:</strong> Please scan the vehicle seal number, then scan all the manifests on
+                            the right side, click Submit, and obtain the POD.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder4.png" alt="Without Vehicle Option">
+                        </div>
+                        <p><strong>Step 4:</strong> In case the trip is invalid, click on "Without Vehicle", then scan
+                            all the manifests, click "Unloading Complete", and obtain the POD.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder5.png" alt="Receive Button">
+                        </div>
+                        <p><strong>Step 5:</strong> Click on "Receive".</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder6.png" alt="Select Transporter">
+                        </div>
+                        <p><strong>Step 6:</strong> From the dropdown, select Transporter and scan all the manifests.
+                        </p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder7.png" alt="Submit and Print">
+                        </div>
+                        <p><strong>Step 7:</strong> Click on "Submit & Print" to generate and print the POD (Proof Of
+                            Delivery).</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">MM Reaching Hub</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Receive on Trip</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Seal & Manifests</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Submit & Get POD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="inbound-manifest-received" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">1.2 </span>Receiving Shipments from Manifests</h3>
+                        <div class="step-description">
+                            After receiving the manifest, scan individual AWBs to receive shipments into the system.
+                        </div>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder8.png" alt="Receive Manifests">
+                        </div>
+                        <p><strong>Step 1:</strong> Click on "Receive Manifests" in the portal.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder9.png" alt="Scan Manifest Seal">
+                        </div>
+                        <p><strong>Step 2:</strong> Scan the seal number on each manifest and scan all AWB numbers to
+                            receive the shipments in the manifests. The number of scanned/unscanned AWBs will reflect.
+                        </p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Receive Manifests</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Manifest Seal</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan AWBs</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Verify Count</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="inbound-sorting" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">1.3 </span>Sorting</h3>
+                        <div class="step-description">
+                            Sort shipments based on pincode, route, type, and criticality for smooth delivery
+                            operations.
+                        </div>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder10.png" alt="Sort Pincode Wise">
+                        </div>
+                        <p><strong>Step 1:</strong> Scan shipment and sort pincode-wise in bins.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder11.png" alt="Sort Route Wise">
+                        </div>
+                        <p><strong>Step 2:</strong> Sort all Fresh D-1, NA, and NC shipments route-wise.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder12.png" alt="Sort Undelivered">
+                        </div>
+                        <p><strong>Step 3:</strong> While closing the runsheet, sort all undelivered shipments based on
+                            their final status.</p>
+
+                        <div class="step-image-container">
+                            <img src="https://i.postimg.cc/placeholder13.png" alt="Sort RTS Volumetric">
+                        </div>
+                        <p><strong>Step 4:</strong> Scan and sort all RTS and Volumetric shipments into appropriate
+                            bins.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Scan Shipments</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Sort Pincode-wise</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Sort Route-wise</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Sort Undelivered/RTS/Critical</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OUTBOUND SUBSECTION -->
+            <div id="hub-outbound" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📦 Outbound Process</h3>
+
+                <!-- Navigation Buttons -->
+                <div class="detail-nav">
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-creation-forward', this)">1️⃣
+                        Runsheet Creation for Forward Operations</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-creation-reverse', this)">2️⃣
+                        Runsheet Creation for Reverse Operations</button>
+                    <button class="detail-btn"
+                        onclick="showDetail('outbound', 'runsheet-creation-rts-forward', this)">3️⃣ Runsheet Creation
+                        for RTS Forward Operation</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-creation-fm-pickup', this)">4️⃣
+                        Runsheet Creation for FM Pickup</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'ofd-ofp', this)">5️⃣ Out For Delivery
+                        (OFD) / Out For Pickup (OFP)</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-closure-forward', this)">6️⃣
+                        Runsheet Closure Forward Operations</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-closure-reverse', this)">7️⃣
+                        Runsheet Closure Reverse Operations</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-closure-rts', this)">8️⃣
+                        Runsheet Closure for RTS Delivery</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'runsheet-closure-fm-pickup', this)">9️⃣
+                        Runsheet Closure for FM Pickup</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'rto-rts-process', this)">🔟 RTO/RTS
+                        Process</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'bagging-connection', this)">1️⃣1️⃣
+                        Bagging and Connection</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'hub-to-hub', this)">1️⃣2️⃣ Hub to Hub
+                        Movement</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'address-issues', this)">1️⃣3️⃣ Address
+                        Issues Process</button>
+                    <button class="detail-btn" onclick="showDetail('outbound', 'dual-barcode-meesho', this)">1️⃣4️⃣ Dual
+                        Barcode for Meesho</button>
+                </div>
+
+                <!-- 2.1 Runsheet Creation for Forward Operations -->
+                <div id="outbound-runsheet-creation-forward" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.1 </span>Runsheet Creation for Forward Operations</h3>
+                        <div class="step-description">Steps to create a runsheet for forward delivery operations before
+                            dispatching shipments.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder1.png"
+                                alt="Manage Runsheets"></div>
+                        <p><strong>Step 1:</strong> Under Forward Operations click on <strong>Manage Runsheets</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder2.png"
+                                alt="Orders to Deliver"></div>
+                        <p><strong>Step 2:</strong> Under Manage Runsheet, click on <strong>Orders to Deliver</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder3.png"
+                                alt="Scan AWB"></div>
+                        <p><strong>Step 3:</strong> Please scan the <strong>AWB</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder4.png"
+                                alt="Save Runsheet"></div>
+                        <p><strong>Step 4:</strong> Click on the <strong>Save Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder5.png"
+                                alt="Mark As OFD"></div>
+                        <p><strong>Step 5:</strong> Enter the <strong>Rider Name/ID</strong> and click on <strong>Mark
+                                As OFD</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder6.png"
+                                alt="Mark OFD"></div>
+                        <p><strong>Step 6:</strong> Click on <strong>Mark OFD</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Manage Runsheets</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Orders to Deliver</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan AWB</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Save Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Mark OFD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.2 Runsheet Creation for Reverse Operations -->
+                <div id="outbound-runsheet-creation-reverse" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.2 </span>Runsheet Creation for Reverse Operations</h3>
+                        <div class="step-description">Steps to create a runsheet for managing reverse shipment pickups
+                            efficiently.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder7.png"
+                                alt="Manage Reverse Runsheets"></div>
+                        <p><strong>Step 1:</strong> Under Reverse Operations, click on <strong>Manage
+                                Runsheets</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder8.png"
+                                alt="Create New Runsheet"></div>
+                        <p><strong>Step 2:</strong> Click on <strong>Create New Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder9.png"
+                                alt="Select Pincode"></div>
+                        <p><strong>Step 3:</strong> Select the <strong>Pincode</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder10.png"
+                                alt="Select Ageing Type"></div>
+                        <p><strong>Step 4:</strong> Select the <strong>Ageing type</strong> and click
+                            <strong>Apply</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder11.png"
+                                alt="Pickup Save Runsheet"></div>
+                        <p><strong>Step 5:</strong> Select <strong>Pickup</strong> and then click <strong>Save
+                                Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder12.png"
+                                alt="Add & Save Runsheet"></div>
+                        <p><strong>Step 6:</strong> If multiple orders share the same address, select the AWBs to add
+                            and click <strong>Add & Save Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder13.png"
+                                alt="Confirm & Mark OFP"></div>
+                        <p><strong>Step 7:</strong> Type the rider ID or name, and click <strong>Confirm & Mark
+                                OFP</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Manage Runsheets</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Create New Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Select Pincode</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Save Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Confirm & Mark OFP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.3 RTS Runsheet Creation -->
+                <div id="outbound-runsheet-creation-rts-forward" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.3 </span>Runsheet Creation for RTS Forward Operation</h3>
+                        <div class="step-description">Steps to create a runsheet for managing RTS (Return to Seller)
+                            deliveries efficiently.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder14.png"
+                                alt="Manage Runsheets"></div>
+                        <p><strong>Step 1:</strong> Under Forward Operations, click on <strong>Manage
+                                Runsheets</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder15.png"
+                                alt="Create RTS Runsheet"></div>
+                        <p><strong>Step 2:</strong> Click on <strong>Create RTS Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder16.png"
+                                alt="Select Pincode"></div>
+                        <p><strong>Step 3:</strong> Select the <strong>Pincode</strong> and click
+                            <strong>Apply</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder17.png"
+                                alt="Start Scanning"></div>
+                        <p><strong>Step 4:</strong> Select the <strong>Seller Name</strong> and click <strong>Start
+                                Scanning</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder18.png"
+                                alt="Save Runsheet"></div>
+                        <p><strong>Step 5:</strong> Scan all AWBs and click on <strong>Save Runsheet</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Manage Runsheets</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Create RTS Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Start Scanning</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Save & Assign Runsheet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.4 FM Pickup Runsheet -->
+                <div id="outbound-runsheet-creation-fm-pickup" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.4 </span>Runsheet Creation for FM Pickup</h3>
+                        <div class="step-description">Steps to create a runsheet for managing FM pickups efficiently.
+                        </div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder19.png"
+                                alt="Manage Runsheets"></div>
+                        <p><strong>Step 1:</strong> Under Reverse Operations, click on <strong>Manage
+                                Runsheets</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder20.png"
+                                alt="Create Seller Pickup"></div>
+                        <p><strong>Step 2:</strong> Click on <strong>Create Seller Pickup Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder21.png"
+                                alt="Select Pincodes"></div>
+                        <p><strong>Step 3:</strong> Select <strong>Pincode(s)</strong> and click <strong>Apply</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder22.png"
+                                alt="Add To Runsheet"></div>
+                        <p><strong>Step 4:</strong> Select sellers to assign and click <strong>Add To Runsheet</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder23.png"
+                                alt="Create Runsheet"></div>
+                        <p><strong>Step 5:</strong> Once AWBs are added, click <strong>Create Runsheet</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder24.png"
+                                alt="Mark OFP"></div>
+                        <p><strong>Step 6:</strong> Enter <strong>Rider Name/ID</strong> and click <strong>Mark
+                                OFP</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Manage Runsheets</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Seller Pickup Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Add To Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Save & Assign Runsheet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.5 Out For Delivery / Pickup -->
+                <div id="outbound-ofd-ofp" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.5 </span>Out For Delivery (OFD) / Out For Pickup (OFP)</h3>
+                        <div class="step-description">Steps to manage runsheet creation and tracking for OFD and OFP
+                            operations.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder25.png"
+                                alt="Mark OFD"></div>
+                        <p><strong>Step 1:</strong> Mark <strong>OFD</strong> against the runsheet created.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder26.png"
+                                alt="Select Rider"></div>
+                        <p><strong>Step 2:</strong> Select the <strong>Rider</strong> and click <strong>Mark As
+                                OFD</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder27.png"
+                                alt="Mark OFP"></div>
+                        <p><strong>Step 3:</strong> Mark <strong>OFP</strong> against the runsheet created.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder28.png"
+                                alt="Select Rider OFP"></div>
+                        <p><strong>Step 4:</strong> Select Rider and click <strong>Mark As OFP</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Mark OFD</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Mark OFP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2.6 Runsheet Closure Forward Operations -->
+                <div id="outbound-runsheet-closure-forward" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.6 </span>Runsheet Closure for Forward Operations</h3>
+                        <div class="step-description">Steps to close a runsheet for forward deliveries after rider
+                            completion.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder29.png"
+                                alt="Runsheet Closure"></div>
+                        <p><strong>Step 1:</strong> Navigate to <strong>Runsheet Closure → Forward</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder30.png"
+                                alt="Select Runsheet"></div>
+                        <p><strong>Step 2:</strong> Select the runsheet to be closed and click <strong>View</strong>.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder31.png"
+                                alt="Scan Shipments"></div>
+                        <p><strong>Step 3:</strong> Scan all delivered and undelivered shipments.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder32.png"
+                                alt="Update Status"></div>
+                        <p><strong>Step 4:</strong> Update statuses for each AWB (Delivered, RTO, Reattempt).</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder33.png"
+                                alt="Submit Closure"></div>
+                        <p><strong>Step 5:</strong> Click <strong>Submit Closure</strong> to complete the process.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Select Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Shipments</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Update Status</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Submit Closure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.7 Runsheet Closure Reverse Operations -->
+                <div id="outbound-runsheet-closure-reverse" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.7 </span>Runsheet Closure for Reverse Operations</h3>
+                        <div class="step-description">Steps to close reverse runsheets after completion of pickups.
+                        </div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder34.png"
+                                alt="Reverse Closure"></div>
+                        <p><strong>Step 1:</strong> Go to <strong>Runsheet Closure → Reverse</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder35.png"
+                                alt="Select Runsheet"></div>
+                        <p><strong>Step 2:</strong> Select the reverse runsheet to close.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder36.png"
+                                alt="Scan AWBs"></div>
+                        <p><strong>Step 3:</strong> Scan all collected AWBs from the rider.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder37.png"
+                                alt="Mark Status"></div>
+                        <p><strong>Step 4:</strong> Update pickup status for each AWB (Picked, Not Picked, Hold).</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder38.png"
+                                alt="Submit"></div>
+                        <p><strong>Step 5:</strong> Click <strong>Submit Closure</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Select Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan AWBs</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Mark Status</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Submit Closure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.8 Runsheet Closure for RTS Delivery -->
+                <div id="outbound-runsheet-closure-rts" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.8 </span>Runsheet Closure for RTS Delivery</h3>
+                        <div class="step-description">Steps to close RTS runsheets after completing return deliveries.
+                        </div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder39.png"
+                                alt="RTS Runsheet"></div>
+                        <p><strong>Step 1:</strong> Navigate to <strong>Runsheet Closure → RTS</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder40.png"
+                                alt="Select Runsheet"></div>
+                        <p><strong>Step 2:</strong> Select the RTS runsheet to close.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder41.png"
+                                alt="Scan Packages"></div>
+                        <p><strong>Step 3:</strong> Scan all returned shipments from the rider.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder42.png"
+                                alt="Submit"></div>
+                        <p><strong>Step 4:</strong> Click <strong>Submit Closure</strong>.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Select RTS Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Packages</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Submit Closure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.9 Runsheet Closure for FM Pickup -->
+                <div id="outbound-runsheet-closure-fm-pickup" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.9 </span>Runsheet Closure for FM Pickup</h3>
+                        <div class="step-description">Steps to close runsheets created for FM pickups after rider
+                            submission.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder43.png"
+                                alt="FM Pickup Closure"></div>
+                        <p><strong>Step 1:</strong> Go to <strong>Runsheet Closure → FM Pickup</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder44.png"
+                                alt="Select Runsheet"></div>
+                        <p><strong>Step 2:</strong> Select the relevant runsheet.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder45.png"
+                                alt="Scan Shipments"></div>
+                        <p><strong>Step 3:</strong> Scan all shipments returned by the rider.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder46.png"
+                                alt="Submit"></div>
+                        <p><strong>Step 4:</strong> Click <strong>Submit</strong> to close the runsheet.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Select Runsheet</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Shipments</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Submit Closure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.10 RTO / RTS Process -->
+                <div id="outbound-rto-rts-process" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.10 </span>RTO / RTS Process</h3>
+                        <div class="step-description">Steps to handle Return to Origin (RTO) and Return to Seller (RTS)
+                            shipments.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder47.png"
+                                alt="Identify RTO"></div>
+                        <p><strong>Step 1:</strong> Identify undelivered shipments marked as <strong>RTO</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder48.png"
+                                alt="Bagging RTO"></div>
+                        <p><strong>Step 2:</strong> Bag all RTO shipments as per pincode and manifest them for return.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder49.png"
+                                alt="RTS Seller Return"></div>
+                        <p><strong>Step 3:</strong> RTS shipments should be delivered back to the seller as per the RTS
+                            runsheet.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Identify RTO/RTS</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Bagging</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Manifest & Dispatch</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.11 Bagging and Connection -->
+                <div id="outbound-bagging-connection" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.11 </span>Bagging and Connection</h3>
+                        <div class="step-description">Steps for creating and connecting bags for outbound shipments.
+                        </div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder50.png"
+                                alt="Create Bag"></div>
+                        <p><strong>Step 1:</strong> Navigate to <strong>Bagging → Create Bag</strong>.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder51.png"
+                                alt="Scan Shipments"></div>
+                        <p><strong>Step 2:</strong> Scan all shipments and add to the created bag.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder52.png"
+                                alt="Seal Bag"></div>
+                        <p><strong>Step 3:</strong> Seal the bag and scan the seal number.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder53.png"
+                                alt="Connection"></div>
+                        <p><strong>Step 4:</strong> Connect the bag to its destination manifest.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Create Bag</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Shipments</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Seal & Connect</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.12 Hub to Hub Movement -->
+                <div id="outbound-hub-to-hub" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.12 </span>Hub to Hub Movement</h3>
+                        <div class="step-description">Process for moving shipments between hubs securely.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder54.png"
+                                alt="Create Manifest"></div>
+                        <p><strong>Step 1:</strong> Create a <strong>Hub to Hub Manifest</strong> in the system.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder55.png"
+                                alt="Scan Bags"></div>
+                        <p><strong>Step 2:</strong> Scan and add all bags meant for the destination hub.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder56.png"
+                                alt="Dispatch"></div>
+                        <p><strong>Step 3:</strong> Dispatch after verifying vehicle and seal.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Create Manifest</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Bags</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Dispatch</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.13 Address Issues Process -->
+                <div id="outbound-address-issues" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.13 </span>Address Issues Process</h3>
+                        <div class="step-description">Steps to manage shipments with incorrect or incomplete addresses.
+                        </div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder57.png"
+                                alt="Identify Issue"></div>
+                        <p><strong>Step 1:</strong> Identify shipments flagged for address issues.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder58.png"
+                                alt="Mark Issue"></div>
+                        <p><strong>Step 2:</strong> Update remarks (Address Incorrect / Area Not Serviceable).</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder59.png"
+                                alt="Move to Hold"></div>
+                        <p><strong>Step 3:</strong> Move shipment to <strong>Hold</strong> or <strong>RTO</strong>
+                            category.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Identify Issue</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Update Remarks</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Move to Hold/RTO</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.14 Dual Barcode for Meesho -->
+                <div id="outbound-dual-barcode-meesho" class="sop-detail">
+                    <div class="sop-step">
+                        <h3><span class="step-number">2.14 </span>Dual Barcode for Meesho</h3>
+                        <div class="step-description">Process to handle shipments containing dual barcodes for Meesho
+                            orders.</div>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder60.png"
+                                alt="Identify Dual Barcode"></div>
+                        <p><strong>Step 1:</strong> Identify packages with dual barcodes (Primary & Secondary).</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder61.png"
+                                alt="Scan Primary"></div>
+                        <p><strong>Step 2:</strong> Scan the <strong>Primary (Logistics)</strong> barcode first.</p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder62.png"
+                                alt="Scan Secondary"></div>
+                        <p><strong>Step 3:</strong> Scan the <strong>Secondary (Meesho)</strong> barcode for linkage.
+                        </p>
+
+                        <div class="step-image-container"><img src="https://i.postimg.cc/placeholder63.png"
+                                alt="Verify Mapping"></div>
+                        <p><strong>Step 4:</strong> Verify that both barcodes are mapped correctly before dispatch.</p>
+
+                        <div class="route-map">
+                            <h4>🗺️ Process Flow:</h4>
+                            <div class="route-steps">
+                                <div class="route-step">Identify Dual Barcode</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Primary</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Scan Secondary</div>
+                                <div class="route-arrow">→</div>
+                                <div class="route-step">Verify Mapping</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- OTHER HUB SUBSECTIONS -->
+            <div id="hub-lm-cluster" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🗺️ LM Cluster Management</h3>
+
+                <div class="sop-step">
+                    <h3><span class="step-number">3.1 </span>LM Cluster Overview</h3>
+                    <div class="step-description">
+                        Last Mile (LM) Cluster management helps in organizing delivery zones and optimizing routes for
+                        better
+                        operational efficiency and timely deliveries.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder70.png" alt="LM Cluster Portal">
+                    </div>
+                    <p><strong>Step 1:</strong> Navigate to the <strong>LM Cluster</strong> section in the Hub Portal.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder71.png" alt="View Clusters">
+                    </div>
+                    <p><strong>Step 2:</strong> View all assigned clusters along with their mapped pincodes and route
+                        names.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder72.png" alt="Assign Riders">
+                    </div>
+                    <p><strong>Step 3:</strong> Assign riders to specific clusters based on service area and volume
+                        load.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder73.png" alt="Monitor Cluster">
+                    </div>
+                    <p><strong>Step 4:</strong> Monitor each cluster’s delivery performance, optimize boundaries, and
+                        make necessary adjustments.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Access LM Cluster</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">View Clusters</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Assign Riders</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Monitor & Optimize</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-help-center" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">💬 Help Center</h3>
+
+                <div class="sop-step">
+                    <h3><span class="step-number">3.2 </span>Help Center</h3>
+                    <div class="step-description">
+                        A support section to resolve operational queries and assist with process-related issues.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder80.png" alt="Open Help Center">
+                    </div>
+                    <p><strong>Step 1:</strong> Navigate to the Hub Portal and click on the <strong>Help Center</strong>
+                        option.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder81.png" alt="Create a Ticket">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Create a Ticket</strong> to initiate a new request.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder82.png" alt="Select Issue Category">
+                    </div>
+                    <p><strong>Step 3:</strong> Select the issue category and provide additional details regarding the
+                        problem.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder83.png" alt="Submit Help Ticket">
+                    </div>
+                    <p><strong>Step 4:</strong> Specify the issue clearly and click on the <strong>Submit</strong>
+                        button.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder84.png" alt="View Submitted Tickets">
+                    </div>
+                    <p><strong>Step 5:</strong> View all submitted tickets from the <strong>Open Tickets</strong> tab to
+                        track status and updates.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder85.png" alt="POC List">
+                    </div>
+                    <p><strong>Additional Info:</strong> You can also refer to the <strong>POC (Point of
+                            Contact)</strong> list for department-wise contact details to connect directly for specific
+                        support needs.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Help Center</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Create Ticket</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Specify Issue</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Raise / Track Issue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-cod" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">💰 COD Management</h3>
+                <div class="sop-step">
+                    <h3>COD Collection & Reconciliation</h3>
+                    <div class="step-description">
+                        Steps to handle, verify, and reconcile Cash on Delivery (COD) collections and settlements.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder90.png" alt="Click on Cash Management">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Cash Management</strong> in the Hub Portal.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder91.png" alt="Riders Deposit">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Riders Deposit</strong> to check rider pendency and
+                        overall pending amounts.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder92.png" alt="Daily Cash Upload">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Daily Cash Upload</strong> to deposit the amount
+                        through multiple payment modes.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder93.png" alt="CMS Deposit">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>CMS Deposit</strong> for amounts deposited via CMS
+                        executives.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder94.png" alt="Enter Deposit Details">
+                    </div>
+                    <p><strong>Step 5:</strong> Enter details such as CMS service name, deposit date, cash deposited,
+                        deposit ID; upload slip and click <strong>Add</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder95.png" alt="UPI Deposit">
+                    </div>
+                    <p><strong>Step 6:</strong> Click on <strong>UPI Deposit</strong> tab, enter amount, and generate
+                        UPI QR code.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder96.png" alt="Scan and Pay UPI">
+                    </div>
+                    <p><strong>Step 7:</strong> Scan and pay. You can change the amount and regenerate the QR code for
+                        multiple deposits.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder97.png" alt="Online/Cash Deposit">
+                    </div>
+                    <p><strong>Step 8:</strong> Click on <strong>Online/Cash Deposit</strong>, enter required details,
+                        and click <strong>Add</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder98.png" alt="Pendency Summary">
+                    </div>
+                    <p><strong>Step 9:</strong> Under Cash Management, click on <strong>Pendency</strong> to view a
+                        summary of the last 7 days.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Cash Management</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Category</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Upload Attachment</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-undelivered-calling" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📞 Undelivered Shipment Calling</h3>
+                <div class="sop-step">
+                    <h3>Customer Follow-up Process</h3>
+                    <div class="step-description">
+                        Steps to contact customers and resolve issues related to undelivered shipments.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-01.png"
+                            alt="Click on MM Reaching Hub">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Undelivered Shipment Calling</strong> in the Hub
+                        Portal.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-02.png"
+                            alt="Click Call or Edit Icon">
+                    </div>
+                    <p><strong>Step 2:</strong> Click the <strong>Call</strong> or <strong>Edit</strong> icon.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-03.png" alt="Click Request Call">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Request Call</strong> to initiate a masked call
+                        connection between the hub team and the customer.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-04.png" alt="Refresh Status">
+                    </div>
+                    <p><strong>Step 4:</strong> Click <strong>Refresh Status</strong> to update the remark if the call
+                        connected with the customer & refresh the page by clicking the refresh button at the top.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-05.png"
+                            alt="Update Customer Remarks">
+                    </div>
+                    <p><strong>Step 5:</strong> Update customer remarks to <strong>Customer Available</strong> if they
+                        request a delivery/pickup reattempt; otherwise, select <strong>Customer Not Available</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-06.png"
+                            alt="Submit after Call Masking">
+                    </div>
+                    <p><strong>Step 6:</strong> Once call masking is done, click on the <strong>Submit</strong> button.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-07.png"
+                            alt="Go to Submitted Remarks">
+                    </div>
+                    <p><strong>Step 7:</strong> Go to the submitted remarks section.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-08.png"
+                            alt="Check Submitted Remarks">
+                    </div>
+                    <p><strong>Step 8:</strong> After call masking is done, check the submitted remarks.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-09.png" alt="Total NC Marked Today">
+                    </div>
+                    <p><strong>Step 9:</strong> View <strong>Total NC Marked Today</strong>: Not Contactable status
+                        marked in Rider App for the day.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Undelivered Shipment</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Request Call</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Update Customer Remarks</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-tickets" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🎟 Tickets Management</h3>
+                <div class="sop-step">
+                    <h3>Ticket Creation & Resolution</h3>
+                    <div class="step-description">
+                        Steps to raise, track, and resolve operational or shipment-related issues through the ticketing
+                        system.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-01.png"
+                            alt="Click on action tab search option">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the <strong>Action Tab Search</strong> option in the Hub
+                        Portal.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-02.png"
+                            alt="View submitted remarks from action tab">
+                    </div>
+                    <p><strong>Step 2:</strong> View <strong>Submitted Remarks</strong> from the Action Tab.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-03.png"
+                            alt="Click on Contact Customer">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Contact Customer</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-04.png"
+                            alt="Enter contact number and request call">
+                    </div>
+                    <p><strong>Step 4:</strong> Enter the contact number and press <strong>Request Call</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-05.png" alt="IVR call connected">
+                    </div>
+                    <p><strong>Step 5:</strong> IVR call will be connected to the submitted number.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Click on Tickets</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click on View</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Contact Customer</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-pincode-category" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🪪 Pincode Category</h3>
+                <div class="sop-step">
+                    <h3>Pincode Classification</h3>
+                    <div class="step-description">
+                        Classification of delivery areas based on pincodes to determine rider payout slabs and
+                        distance-based compensation.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-MM-Reaching-Hub-Pincode.png"
+                            alt="Pincode Category in Hub Portal">
+                    </div>
+
+                    <p><strong>Step 1:</strong> In the <strong>Pincode Category</strong> section, view the pincode
+                        classification for each parcel.</p>
+
+
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Pincode Category</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hub-add-new-rider" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🧑‍🤝‍🧑 Add New Rider to Hub</h3>
+                <div class="sop-step">
+                    <h3>Rider Onboarding Process</h3>
+                    <div class="step-description">
+                        Steps to onboard and assign a new rider to the respective hub for operational activities.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder99.png" alt="Add New Rider to Hub Step 1">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the Add new rider to hub</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder100.png" alt="Add New Rider to Hub Step 2">
+                    </div>
+                    <p><strong>Step 2:</strong> Add the rider’s actual contact number and click on Verify. Once done,
+                        the rider will receive an OTP via SMS; enter the OTP in the hub portal and click on Submit</p>
+
+                    <p><strong>Submit</strong></p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Add new rider to hub</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter the Number</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">enter the OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-leads-for-hiring" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📩 Leads for Hiring</h3>
+                <div class="sop-step">
+                    <h3>Rider Hiring Pipeline</h3>
+                    <div class="step-description">
+                        Process to identify, track, and manage potential candidates for recruitment.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder101.png" alt="Leads for Hiring Step 1">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the Leads for hiring</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder102.png" alt="Leads for Hiring Step 2">
+                    </div>
+                    <p><strong>Step 2:</strong> Select the lead type and call the new rider</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Leads for hiring</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select the lead</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Hired new rider</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hub-rider-activity" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">👥 Rider Activity</h3>
+                <div class="sop-step">
+                    <h3>Monitor Rider Performance</h3>
+                    <div class="step-description">
+                        Monitoring and tracking the daily tasks and performance of riders.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-rider-activity.png" alt="Rider Activity Dashboard">
+                    </div>
+                    <p><strong>Step 1:</strong> In the Rider Activity section, monitor and check the rider’s activities.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Rider Activity section</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Monitoring and tracking</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-urgent-delivery" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🚨 Urgent Delivery Shipments</h3>
+                <div class="sop-step">
+                    <h3>Priority Shipment Handling</h3>
+                    <div class="step-description">
+                        Process to prioritize and manage shipments requiring immediate delivery.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-urgent-delivery-1.png"
+                            alt="Urgent Delivery Shipments tab">
+                        <p><strong>Step 1:</strong> Click on Urgent Delivery Shipments tab under other operations</p>
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-urgent-delivery-2.png"
+                            alt="Check last updated status and delivery attempt details">
+                        <p><strong>Step 2:</strong> Hub Incharge (HI) checks the last updated status, last attempted
+                            details along with the aging and attempts delivery within 24 hours from receiving.</p>
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-urgent-delivery-3.png"
+                            alt="Track UDS shipments in runsheet">
+                        <p><strong>Step 3:</strong> HI can track Urgent Delivery Shipments (UDS) while creating the
+                            runsheet, highlighted at the top in red color.</p>
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder-urgent-delivery-4.png"
+                            alt="Pop-up on scanning UDS shipments">
+                        <p><strong>Step 4:</strong> Upon scanning any UDS shipment, a pop-up shows to suggest attempting
+                            these shipments on top priority.</p>
+                    </div>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Urgent Delivery</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Orders to Deliver</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan the AWB</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Saved Runsheet</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark OFD (Out For Delivery)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="hub-ndr" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📦 New Delivery Request (NDR)</h3>
+                <div class="sop-step">
+                    <h3>NDR Management Process</h3>
+                    <div class="step-description">
+                        Handle shipments requiring customer action or re-delivery scheduling.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/g225y7sH/1-1.png" alt="Check NDR cases on Orders to Deliver">
+
+                        <p><strong>Step 1:</strong> HI/TL can check NDR cases on Orders to Deliver and follow the same
+                            process as Runsheet Creation for Forward Delivery.</p>
+                    </div>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Hub Portal</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Orders to Deliver</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click on Highlighted</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Save Runsheet</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark OFD (Out For Delivery)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIDER APP SECTION -->
+        <div id="rider-app" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🛵 Rider App Operations</h2>
+
+            <div class="subsection-nav">
+                <button class="subsection-btn" onclick="showSubsection('rider', 'login', this)">🔐 Login
+                    Process</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'cod-delivery', this)">💰 COD Delivery
+                    Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'rejected-cases', this)">🚫 Rejected
+                    Cases Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'completed-cases', this)">✅ Completed
+                    Cases Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'prepaid-delivery', this)">💳 Prepaid
+                    Delivery Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'ivrs-uncontactable', this)">📞 Unable
+                    to Contact Customer (IVRS)</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'customer-pickup', this)">📦 Customer
+                    Pickup (Primary QC)</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'broadcast-feature', this)">📢 Broadcast
+                    Feature</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'seller-delivery', this)">🏪 Seller
+                    Delivery Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'seller-pickup', this)">🚚 Seller Pickup
+                    Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'open-box-delivery', this)">📦 Open Box
+                    Delivery (OBD)</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'exchange-flow', this)">🔄 Exchange
+                    Flow</button>
+                <button class="subsection-btn" onclick="showSubsection('rider', 'refer-flow', this)">👥 Refer
+                    Flow</button>
+            </div>
+
+            <div id="rider-login" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🔐 Rider Login Process</h3>
+                <div class="sop-step">
+                    <h3>App Login & Daily Check-in</h3>
+                    <div class="step-description">
+                        Step-by-step guide for riders to login and start their daily operations.
+                    </div>
+                    <p><strong>Step 1:</strong> Open Rider App on mobile device.</p>
+                    <p><strong>Step 2:</strong> Enter registered mobile number.</p>
+                    <p><strong>Step 3:</strong> Enter OTP received via SMS.</p>
+                    <p><strong>Step 4:</strong> Allow location permissions for GPS tracking.</p>
+                    <p><strong>Step 5:</strong> Mark attendance by clicking "Start Day".</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Login Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Open App</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter Mobile</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Verify OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Start Day</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-cod-delivery" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">💰 COD Delivery Flow</h3>
+                <div class="sop-step">
+                    <h3>Steps to complete COD deliveries efficiently with proper verification.</h3>
+                    <div class="step-description">
+                        This process ensures smooth Cash on Delivery (COD) handling by verifying payment and confirming
+                        receiver details.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder01.png" alt="Click on My Runsheets">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Customer Name</strong> or scan the
+                        <strong>Barcode</strong> to fetch shipment details.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder02.png" alt="Mark Delivered">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Mark Delivered</strong> to deliver the shipment to the
+                        customer.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder03.png" alt="Select Payment Mode">
+                    </div>
+                    <p><strong>Step 3:</strong> Select the appropriate <strong>Payment Mode</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder04.png" alt="Select UPI or Cash">
+                    </div>
+                    <p><strong>Step 4:</strong> Choose <strong>UPI</strong> or <strong>Paid Through Cash</strong> and
+                        continue as per the process flow.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder05.png" alt="Select Receiver">
+                    </div>
+                    <p><strong>Step 5:</strong> Select who received the shipment and click on <strong>Mark
+                            Delivered</strong> to complete delivery.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder06.png" alt="Return to Home Page">
+                    </div>
+                    <p><strong>Step 6:</strong> Once delivery is completed, the rider will be redirected to the
+                        <strong>Home Page</strong>.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Scan Barcode</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Delivered</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Payment</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click Paid</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Receiver</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Complete Delivery</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-rejected-cases" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🚫 Rejected Cases Flow</h3>
+                <div class="sop-step">
+                    <h3>Process to handle rejected shipments, update status, and communicate with the customer.</h3>
+                    <div class="step-description">
+                        This process ensures proper handling of rejected shipments by updating statuses accurately and
+                        maintaining customer communication.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder07.png" alt="Rejected Option in My Runsheets">
+                    </div>
+                    <p><strong>Step 1:</strong> Under the <strong>Rejected</strong> option, riders can view shipment
+                        details and mark the status as <strong>NC (Not Contactable)</strong>, <strong>CID (Customer
+                            Issue Delivery)</strong>, or <strong>Cancelled</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder08.png" alt="Deliver Again Option">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Deliver Again</strong> to move the shipment to the
+                        <strong>In-Progress</strong> bucket. Shipments <strong>Cancelled by Customer</strong> will not
+                        have this option.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Rejected Shipments</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Update Status</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Notify Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-completed-cases" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">✅ Completed Cases Flow</h3>
+                <div class="sop-step">
+                    <h3>Process to verify completed deliveries and update final status in the system.</h3>
+                    <div class="step-description">
+                        This process helps riders and hub teams verify completed deliveries, ensuring all successful
+                        shipments are properly recorded and submitted.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder09.png" alt="Completed Orders Tab">
+                    </div>
+                    <p><strong>Step 1:</strong> After completing deliveries, riders can track all completed orders under
+                        the <strong>Completed Orders</strong> tab on the home page.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Completed Shipments</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Verify</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-prepaid-delivery" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">💳 Prepaid Delivery Flow</h3>
+                <div class="sop-step">
+                    <h3>Steps to deliver both COD and Prepaid shipments with proper verification and payment handling.
+                    </h3>
+                    <div class="step-description">
+                        This process ensures correct delivery flow for both COD and Prepaid shipments, including payment
+                        collection, OTP verification, and receiver confirmation.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder11.png" alt="Scan Barcode">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the specific customer name or <strong>Scan Barcode</strong>
+                        from “My Runsheets”.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder12.png" alt="Scan AWB">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Scan AWB</strong> to mark the delivery status.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder13.png" alt="Mark Not Delivered or Collect Payment">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Not Delivered</strong> if the shipment couldn’t be
+                        delivered.
+                        For COD shipments, click on <strong>Collect Payment</strong> when attempting delivery.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder14.png" alt="Select Payment Mode">
+                    </div>
+                    <p><strong>Step 4:</strong> Select the payment mode and click on <strong>Mark Delivered</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder15.png" alt="Enter OTP">
+                    </div>
+                    <p><strong>Step 5:</strong> Enter the OTP sent to the customer’s registered mobile number to confirm
+                        delivery.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder16.png" alt="Select Receiver">
+                    </div>
+                    <p><strong>Step 6:</strong> Select the correct option for the person who received the shipment and
+                        confirm to complete the process.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Scan Barcode</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan AWB</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Status</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Collect Payment</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Receiver</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-ivrs-uncontactable" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📞 Unable to Contact Customer (IVRS)</h3>
+                <div class="sop-step">
+                    <h3>Steps to handle cases when the customer cannot be contacted via call masking.</h3>
+                    <div class="step-description">
+                        This process ensures proper handling of customer unreachability using IVR-assisted call flow and
+                        automated system updates.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder21.png" alt="Unable to Scan">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Unable to Scan</strong> in the "My Runsheets" section.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder22.png" alt="Unable to Contact Customer">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Unable to Contact Customer</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder23.png" alt="Call Customer Option">
+                    </div>
+                    <p><strong>Step 3:</strong> If no call history is found, click on <strong>Call Customer</strong> to
+                        initiate a call manually.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder24.png" alt="Enable IVR Call">
+                    </div>
+                    <p><strong>Step 4:</strong> If the customer is not contactable, click <strong>Yes</strong> to enable
+                        the automated IVR calling system.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder25.png" alt="IVR Response Popup">
+                    </div>
+                    <p><strong>Step 5:</strong> The call will automatically disconnect and a pop-up will show the
+                        <strong>IVR response</strong> of the customer.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder26.png" alt="Attempt Delivery">
+                    </div>
+                    <p><strong>Step 6:</strong> The rider should act as per the IVR response. If the customer confirms,
+                        click on <strong>Attempt Delivery</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder27.png" alt="Scan AWB">
+                    </div>
+                    <p><strong>Step 7:</strong> The rider will be redirected to the order sheet. Click <strong>Scan
+                            AWB</strong> to mark status and continue with delivery flow.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder28.png" alt="Mark NC & Close">
+                    </div>
+                    <p><strong>Step 8:</strong> If the customer remains unreachable, a pop-up will appear, and the
+                        status will be marked as <strong>NC (Not Contactable)</strong>. Click <strong>Close</strong> to
+                        finish.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Unable to Scan</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Unable to Contact</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Call Customer</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enable IVR</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Call Masking Flow</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Customer Response</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Attempt Delivery</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan AWB</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark NC & Close</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-customer-pickup" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📦 Customer Pickup (Primary QC)</h3>
+                <div class="sop-step">
+                    <h3>Steps to perform customer pickups with primary QC checks including verification.</h3>
+                    <div class="step-description">
+                        This process ensures proper handling, verification, and documentation of items picked up from
+                        customers, including Primary QC validation.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder31.png" alt="Customer Name Selection">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the <strong>Customer’s Name</strong> in the "My Runsheets"
+                        section.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder32.png" alt="Start Picking">
+                    </div>
+                    <p><strong>Step 2:</strong> Check the customer’s details, verify the product to be picked, and click
+                        on <strong>Start Picking</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder33.png" alt="Upload Product Image">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Image</strong> and upload the product image of the item
+                        to be picked.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder34.png" alt="Capture Required Images">
+                    </div>
+                    <p><strong>Step 4:</strong> Capture product images as per the description shown on the screen.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder35.png" alt="Click Done Notification">
+                    </div>
+                    <p><strong>Step 5:</strong> After capturing all required images, click on <strong>Done</strong> when
+                        prompted.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder36.png" alt="Submit QC Parameters">
+                    </div>
+                    <p><strong>Step 6:</strong> Mark each parameter as <strong>Yes</strong> or <strong>No</strong>
+                        according to the product’s condition, then click <strong>Submit And Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder37.png" alt="QC Status">
+                    </div>
+                    <p><strong>Step 7:</strong> Review the QC status and click on <strong>Proceed to Labeling
+                            Packages</strong> for QC Approved items.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder38.png" alt="Scan Flyer Barcode">
+                    </div>
+                    <p><strong>Step 8:</strong> Scan the <strong>Flyer Barcode</strong> of the packed product and click
+                        <strong>Mark Picked</strong> to complete the pickup.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Customer Name</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Start Picking</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Upload Image</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click Photos</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click Done</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit & Next</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">QC Approved</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Picked</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-broadcast-feature" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📢 Broadcast Feature</h3>
+                <div class="sop-step">
+                    <h3>Steps to send broadcast messages to riders for urgent updates or notifications.</h3>
+                    <div class="step-description">
+                        This feature allows the Hub or Operations team to broadcast messages or assign pickups to
+                        multiple riders simultaneously for faster coordination.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder39.png" alt="Search Route-wise Pickup">
+                    </div>
+                    <p><strong>Step 1:</strong> Enter the keywords to search the route-wise pickup to be assigned.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder40.png" alt="Assign Orders to Pickup">
+                    </div>
+                    <p><strong>Step 2:</strong> Mark the checklist and click on <strong>Assign these orders to
+                            pickup</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder41.png" alt="Broadcast Confirmation Popup">
+                    </div>
+                    <p><strong>Step 3:</strong> For every successful broadcast pickup, a confirmation pop-up will be
+                        displayed.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder42.png" alt="New Runsheet Assigned Notification">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on the <strong>New Runsheet Assigned</strong> notification — the
+                        selected pickup will be added under the <strong>In-Progress</strong> bucket on the home page.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Broadcast Menu</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Pickup</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Assign</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Send</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-seller-delivery" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🏪 Seller Delivery Flow</h3>
+                <div class="sop-step">
+                    <h3>Process for delivering shipments picked up from sellers to the hub or final destinations.</h3>
+                    <div class="step-description">
+                        This process ensures seamless delivery of shipments from sellers to the hub or customers with
+                        verification and tamper checks.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder43.png" alt="Select Seller Delivery">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on the seller to start the delivery under the <strong>In
+                            Progress</strong> tab.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder44.png" alt="Check Order Details">
+                    </div>
+                    <p><strong>Step 2:</strong> Check the order details and click on <strong>Delivered</strong> if the
+                        shipment is successfully delivered to the seller.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder45.png" alt="Not Delivered Reason">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Not Delivered</strong> if the item was not delivered,
+                        and mention the reason in the next pop-up.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder46.png" alt="Scan Barcode Page">
+                    </div>
+                    <p><strong>Step 4:</strong> If <strong>Delivered</strong> was selected, click on <strong>Scan
+                            Barcode</strong> and check the total assigned/scanned/unscanned shipments at the top.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder47.png" alt="Scan Shipment Barcode">
+                    </div>
+                    <p><strong>Step 5:</strong> Scan the shipment barcode.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder48.png" alt="Tampered Shipment">
+                    </div>
+                    <p><strong>Step 6:</strong> If a shipment is tampered, click on <strong>Tampered</strong> and upload
+                        4 images of the tampered shipment.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder49.png" alt="Checklist Tick Mark">
+                    </div>
+                    <p><strong>Step 7:</strong> After scanning, a tick mark will reflect on the checklist — click
+                        <strong>Next</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder50.png" alt="Send Delivery Code">
+                    </div>
+                    <p><strong>Step 8:</strong> Click on <strong>Send Delivery Code to Seller</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder51.png" alt="Enter Delivery Code">
+                    </div>
+                    <p><strong>Step 9:</strong> Enter the delivery code in the dialog box and click <strong>Seller
+                            Delivery Code</strong> to complete the delivery.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder52.png" alt="Delivery Confirmation">
+                    </div>
+                    <p><strong>Step 10:</strong> The rider will be redirected to the home page showing “Uploaded
+                        Successfully” and “Order Marked Delivered.”</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Select Seller</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Check Order</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Delivered / Not Delivered</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan Barcode</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Check Shipment Count</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Tampered</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Upload Images</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Next</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Send Delivery Code</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter Code</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Complete Delivery</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-seller-pickup" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🚚 Seller Pickup Flow</h3>
+                <div class="sop-step">
+                    <h3>Steps to pick up shipments from sellers and record them in the app.</h3>
+                    <div class="step-description">
+                        This process ensures accurate pickup from sellers with proper scanning, verification, and photo
+                        documentation.
+                    </div>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder53.png" alt="Select Seller Pickup">
+                    </div>
+                    <p><strong>Step 1:</strong> Under the <strong>In Progress</strong> bucket, click on the particular
+                        seller name to start the pickup.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder54.png" alt="Verify Seller Details">
+                    </div>
+                    <p><strong>Step 2:</strong> Check the details of the seller. Call the seller if required. Once at
+                        the seller doorstep, click on <strong>Pick</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder55.png" alt="Scan SKU Barcode">
+                    </div>
+                    <p><strong>Step 3:</strong> After clicking <strong>Pick</strong>, scan the SKU barcode. Riders will
+                        be redirected to the next page, then click <strong>Mark Picked</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder56.png" alt="Upload Pickup Photos">
+                    </div>
+                    <p><strong>Step 4:</strong> Upload photos of the items being picked. Riders will be redirected to
+                        the home page for the next pickup, with a successful notification displayed on top.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Pickup Runsheet</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Verify Details</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan Shipments</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Get Signature / Upload Photos</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-open-box-delivery" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📦 Open Box Delivery (OBD) Flow</h3>
+                <div class="sop-step">
+                    <h3>Open Box Delivery process for verifying shipment contents and completing delivery with OTP and
+                        QC checks.</h3>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder57.png" alt="Scan AWB">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Scan AWB</strong> to mark the shipment status.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder58.png" alt="Unable to Scan">
+                    </div>
+                    <p><strong>Step 2:</strong> If the barcode is not scannable, click on <strong>Unable to
+                            Scan</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder59.png" alt="Enter Client Order ID">
+                    </div>
+                    <p><strong>Step 3:</strong> Enter the <strong>Client Order ID</strong> in the input field.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder60.png" alt="Initiate OBD">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>Initiate OBD</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder61.png" alt="Enter OTP">
+                    </div>
+                    <p><strong>Step 5:</strong> Get the OTP from the customer, enter it in the designated field, and
+                        click <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder62.png" alt="QC Question 1">
+                    </div>
+                    <p><strong>Step 6:</strong> For QC Question 1, verify the details, click <strong>Yes</strong>,
+                        upload the required image, then click <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder63.png" alt="QC Question 2">
+                    </div>
+                    <p><strong>Step 7:</strong> For QC Question 2, repeat the verification, click <strong>Yes</strong>,
+                        upload the required image, and click <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder64.png" alt="QC Question 3">
+                    </div>
+                    <p><strong>Step 8:</strong> For QC Question 3, verify, click <strong>Yes</strong>, upload the image,
+                        then click <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder65.png" alt="QC Question 4">
+                    </div>
+                    <p><strong>Step 9:</strong> For QC Question 4, verify, click <strong>Yes</strong>, upload the image,
+                        then click <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder66.png" alt="Proceed with Shipment Delivery">
+                    </div>
+                    <p><strong>Step 10:</strong> Once QC is passed, click on <strong>Proceed with Shipment
+                            Delivery</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder67.png" alt="Confirm Payment">
+                    </div>
+                    <p><strong>Step 11:</strong> Confirm the payment mode (Cash or UPI) and click <strong>Paid</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder68.png" alt="Enter Final OTP">
+                    </div>
+                    <p><strong>Step 12:</strong> Enter the final OTP received from the customer and click
+                        <strong>Next</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder69.png" alt="Mark Delivered">
+                    </div>
+                    <p><strong>Step 13:</strong> Select where the parcel is handed over and click <strong>Mark
+                            Delivered</strong>.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Scan AWB</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Unable to Scan</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter Order ID</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Initiate OBD</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">QC Q1 → Q2 → Q3 → Q4</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Proceed Delivery</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Confirm Payment</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Final OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-exchange-flow" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🔄 Exchange Flow</h3>
+                <div class="sop-step">
+                    <h3>Process for handling customer-requested exchange orders with QC checks and delivery completion.
+                    </h3>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder70.png" alt="Customer Name">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Customer Name</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder71.png" alt="Start Exchange">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>Start Exchange</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder72.png" alt="Enter OTP">
+                    </div>
+                    <p><strong>Step 3:</strong> Enter the <strong>OTP</strong> received from the customer.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder73.png" alt="Next">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder74.png" alt="Start QC">
+                    </div>
+                    <p><strong>Step 5:</strong> Click on <strong>Start QC</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder75.png" alt="Take Product Images">
+                    </div>
+                    <p><strong>Step 6:</strong> Click on <strong>Take Product Images</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder76.png" alt="Click 4 different angles">
+                    </div>
+                    <p><strong>Step 7:</strong> Click images from 4 different angles of the item to be picked and click
+                        <strong>Done</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder77.png" alt="Submit & Next">
+                    </div>
+                    <p><strong>Step 8:</strong> Check the QC parameters and click on <strong>Submit & Next</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder78.png" alt="QC Overview">
+                    </div>
+                    <p><strong>Step 9:</strong> Check QC overview: <br>
+                        - <strong>QC Approved:</strong> Proceed to labeling packages.<br>
+                        - <strong>QC Reject/Fail:</strong> Mark as <strong>Not Picked</strong> (Do not deliver product).
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder79.png" alt="Scan Flyer Barcode">
+                    </div>
+                    <p><strong>Step 10:</strong> Scan the flyer barcode. <em>Note:</em> Post pickup, start the delivery
+                        process and follow the next pop-ups to complete the exchange. Collect COD amount if applicable.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder80.png" alt="Mark Delivered">
+                    </div>
+                    <p><strong>Step 11:</strong> Click on the option indicating to whom the item is handed over and
+                        click <strong>Mark Delivered</strong> to complete the exchange process.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Customer Name</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Start Exchange</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Start QC</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Take Images</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click Done</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit & Next</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">QC Overview</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Scan Flyer</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Mark Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rider-refer-flow" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🫂 Refer Flow</h3>
+                <div class="sop-step">
+                    <h3>Process for referring new riders through the rider app and tracking referral rewards.</h3>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder81.png" alt="Refer & Earn">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>Refer & Earn</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder82.png" alt="Enter Reference">
+                    </div>
+                    <p><strong>Step 2:</strong> Enter the reference contact number and click on <strong>Refer to
+                            Earn</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder83.png" alt="Referral Completed">
+                    </div>
+                    <p><strong>Step 3:</strong> A pop-up confirms that the Refer & Earn process has been completed.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Refer Menu</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Person</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter Details</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit Referral</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Track Reward</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">📊 Dashboard & Reports</h2>
+
+            <div class="subsection-nav">
+                <button class="subsection-btn" onclick="showSubsection('dash', 'live-tracking', this)">🔴 Live
+                    Dashboard </button>
+                <button class="subsection-btn" onclick="showSubsection('dash', 'performance', this)">📈 HI
+                    Dashboard </button>
+
+            </div>
+
+            <div id="dash-live-tracking" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🔴 Live Dashboard</h3>
+                <div class="sop-step">
+                    <h3>Real-time Hub & Shipment Monitoring</h3>
+
+                    <p><strong>Live:</strong> Data is updated immediately or continuously, showing the current
+                        status.<br>
+                        <strong>Dashboard:</strong> A single screen that organizes multiple visual elements (charts,
+                        tables, maps) for quick understanding.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder101.png" alt="GEM Dashboard">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to Hub Portal →
+                        <strong>GEM – Delivery Champion</strong><br>
+                        Tracks hub performance, rider ranking, and delivery efficiency. Highlights top riders based on
+                        DSR, FASR/FPSR, and productivity. Helps identify best and low performers for recognition or
+                        improvement.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder102.png" alt="Pendency Dashboard">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to Hub Portal →
+                        <strong>Pendency</strong><br>
+                        Tracks pending shipments (Critical, Forward, Reverse) not attempted, delivered, or connected to
+                        DC. Shows client/pincode-wise breakup with ageing buckets (0, 1, 2–4, 5–6, 6+). Includes open
+                        escalated orders.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder103.png" alt="Performance Dashboard">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to Hub Portal →
+                        <strong>Performance</strong><br>
+                        Displays forward/reverse metrics — Attempt%, FASR/FPSR, DSR, and runsheet summary. Shows
+                        rider/pincode-wise performance, fake/inactive runsheets, and success rates.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder104.png" alt="Live NC Dashboard">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to Hub Portal →
+                        <strong>Live NC Dashboard</strong><br>
+                        Shows real-time NC (Not Connected/Contactable) shipments. Used to monitor pending cases and
+                        assign riders for follow-up and closure.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder105.png" alt="Fake Tracker Dashboard">
+                    </div>
+                    <p><strong>Step 5:</strong> Click on <strong>"Receive on Trip"</strong> → Start receiving shipments
+                        → <strong>Fake Tracker Dashboard</strong><br>
+                        Monitors fake cases confirmed via IVR. Provides rider-wise and AWB-wise visibility, helping
+                        detect and control fake delivery attempts.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder106.png" alt="FM RTS Report">
+                    </div>
+                    <p><strong>Step 6:</strong> Scan vehicle seal number → Scan all manifests → Click Submit → Obtain
+                        POD → <strong>FM / RTS Report</strong><br>
+                        Shows Forward Movement and Return to Sender performance. Covers runsheet summary, strike rate,
+                        and RTS shipment status (connected, pending, or in transit).</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder107.png" alt="NC Calling Sheet">
+                    </div>
+                    <p><strong>Step 7:</strong> Click on <strong>"Without Vehicle"</strong> → Scan manifests → Click
+                        “Unloading Complete” → Obtain POD → <strong>NC Calling Sheet</strong><br>
+                        Daily tracker for NC follow-ups. Records customer responses, reasons, and actions taken to
+                        resolve NC shipments within TAT.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder108.png" alt="SDD Arrival">
+                    </div>
+                    <p><strong>Step 8:</strong> Click on <strong>"Receive"</strong> → Upload image → <strong>SDD
+                            Arrival</strong><br>
+                        Monitors Same Day Delivery shipments for on-time arrival and delivery. Tracks cut-off time,
+                        scan-in/out, and rider assignment.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder109.png" alt="Shipment Tally">
+                    </div>
+                    <p><strong>Step 9:</strong> Select Transporter → Scan all manifests → <strong>Shipment
+                            Tally</strong><br>
+                        Reconciles physical vs. system shipment counts. Identifies short, excess, or unscanned shipments
+                        to maintain hub inventory accuracy.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder110.png" alt="Trends Dashboard">
+                    </div>
+                    <p><strong>Step 10:</strong> Click on <strong>"Submit & Print"</strong> → Generate and print POD →
+                        <strong>Trends</strong><br>
+                        Provides visual trends of shipment clearance and operational hygiene. Shows daily, weekly, and
+                        monthly data on pendency, performance, and fake cases to ensure process adherence.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Login</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Select Region/Hub</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Monitor Live Shipments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="dash-performance" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📈 HI Dashboard</h3>
+                <div class="sop-step">
+                    <h3>Key Performance Indicators</h3>
+
+                    <p><strong>HI Dashboard:</strong> Used by the Hub Incharge to monitor hub activities, rider
+                        performance, deliveries, COD collections, and other operational KPIs.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder201.png" alt="Rider Hiring">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to Hub Portal →
+                        <strong>Rider Hiring</strong><br>
+                        <em>Total Required Rider</em> = riders needed; <em>LMA Leads</em> = Last Mile Aggregator leads;
+                        <em>Current DAU</em> = active riders; <em>Deficit</em> = hiring gap; <em>Winback Riders</em> =
+                        riders inactive &gt; 8 days.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder202.png" alt="Customer Service">
+                    </div>
+                    <p><strong>Step 2:</strong> Click on <strong>"Receive on Trip"</strong> → Start receiving shipments
+                        → <strong>Customer Service</strong><br>
+                        View forward/reverse metrics: FASR, FPSR, DSR, Fake Runsheets, CCI Resolution, Address Issues,
+                        RTO% (W-4), ZA_RTO% (W-4). Includes rider-wise/pincode-wise performance and runsheet summary for
+                        actions.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder203.png" alt="Loss Control">
+                    </div>
+                    <p><strong>Step 3:</strong> Scan vehicle seal → Scan manifests → <strong>Submit</strong> → Obtain
+                        POD → <strong>Loss Control</strong><br>
+                        <em>COD Balance</em> = Opening + Collected – Auto_UPI – Bank Deposits – Adjustment; <em>Total
+                            Short Deposit</em> = COD pending deposit; <em>Seller Escalation (W-3)%</em>, <em>QC Loss
+                            Accepted (W-3)%</em>, and <em>Seller Escalated Debit (W-3)</em> track loss acceptance and
+                        amounts.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder204.png" alt="Landing Prediction">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>"Without Vehicle"</strong> → Scan manifests →
+                        “Unloading Complete” → Obtain POD → <strong>Landing Prediction</strong><br>
+                        Shows 7-day forecast for FWD, RVP, and Large landings with ±5–10% variation.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder205.png" alt="Speed Metrics">
+                    </div>
+                    <p><strong>Step 5:</strong> Click on <strong>"Receive"</strong> → Upload image →
+                        <strong>Speed</strong><br>
+                        <em>4hr Attempt%</em> (Target &gt;45%), <em>D0 Attempt%</em> (Target &gt;92%), <em>D1
+                            Attempt%</em> (Target &gt;98%), <em>24hr/48hr Pickup</em>, and <em>Broadcast Adherence</em>
+                        (pickup directly assigned by riders via app).
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder206.png" alt="LM Stationary">
+                    </div>
+                    <p><strong>Step 6:</strong> Select <strong>Transporter</strong> → Scan all manifests → <strong>LM
+                            Stationary</strong><br>
+                        Check current hub stock and consumption of last-mile stationary.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder207.png" alt="Fake Status Controls">
+                    </div>
+                    <p><strong>Step 7:</strong> Click <strong>"Submit & Print"</strong> → Generate POD → <strong>Fake
+                            Status</strong><br>
+                        Train riders: record correct statuses, avoid 0% hub-portal updates, don’t self-disconnect calls,
+                        encourage blind attempts, and communicate consequences for repeated fake callouts. Track the
+                        <strong>Fake Tracker Dashboard</strong> and resolve detected fake cases within 24 hours.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder208.png" alt="Trends Dashboard">
+                    </div>
+                    <p><strong>Step 8:</strong> Click <strong>"Submit & Print"</strong> → Generate POD →
+                        <strong>Trends</strong><br>
+                        Graphs: FASR/FPSR (last 14 days), DoD Fake Runsheet Trend (last 14 days), DoD Fake%, D0/D1
+                        Performance Trend (last 14 days), Address Issues — to monitor operational hygiene and
+                        consistency.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Hub Portal</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">HI Dashboard</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">View Performance Metrics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- EXCEPTION PORTAL SECTION -->
+        <div id="exception" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">📝 Exception Portal</h2>
+
+            <div class="subsection-nav">
+                <button class="subsection-btn" onclick="showSubsection('exc', 'tally', this)">📊 Shipment
+                    Tally</button>
+                <button class="subsection-btn" onclick="showSubsection('exc', 'exceptions', this)">⚠️ Exception
+                    Management</button>
+
+            </div>
+
+            <div id="exc-tally" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">📊 Shipment Tally</h3>
+                <div class="sop-step">
+                    <h3>Daily Shipment Reconciliation</h3>
+
+                    <p><strong>Shipment Tally:</strong> The process of counting and verifying incoming shipments against
+                        the manifest to ensure accuracy in delivery, inventory, and system records.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder301.png" alt="Scan Pending Shipments">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to <strong>Hub
+                            Portal</strong> → Select <strong>Shipment Tally</strong>.<br>
+                        Scan the pending shipments under <strong>Scan Shipment AWB</strong> to begin the reconciliation
+                        process.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder302.png" alt="View AWB Status">
+                    </div>
+                    <p><strong>Step 2:</strong> Once the <strong>AWB</strong> is scanned in Shipment Tally, the system
+                        will display the <strong>current status</strong> of the shipment along with its <strong>attempt
+                            details</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder303.png" alt="Tally Completed">
+                    </div>
+                    <p><strong>Step 3:</strong> After all pending shipments are scanned, the dashboard will display
+                        <strong>"All Done"</strong>, confirming that reconciliation is complete.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Shipments Arrive at Hub/Warehouse</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Check Against Manifest/AWB</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Count Total Packages</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Record Tally in System</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Verify Accuracy & Confirm</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="exc-exceptions" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">⚠️ Exception Management</h3>
+                <div class="sop-step">
+                    <h3>Handling Delivery & Operational Exceptions</h3>
+
+                    <p><strong>Exception Management:</strong> The process of identifying, analyzing, and resolving
+                        issues or deviations that occur during the delivery or logistics process to ensure smooth hub
+                        operations.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder401.png" alt="Exception Shipment">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to <strong>Hub
+                            Portal</strong> → Click on <strong>Exception Shipment</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder402.png" alt="Select Reason Dropdown">
+                    </div>
+                    <p><strong>Step 2:</strong> From the <strong>dropdown menu</strong>, select the appropriate
+                        <strong>reason</strong> for the exception.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder403.png" alt="Hazy Shipment">
+                    </div>
+                    <p><strong>Step 3:</strong> Select <strong>Hazy / Label Reprint Shipment</strong> for hazy shipments
+                        and <strong>inscan</strong> the shipment.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder404.png" alt="Enter AWB Twice">
+                    </div>
+                    <p><strong>Step 4:</strong> Enter the <strong>AWB number twice</strong> to confirm and click on
+                        <strong>Submit</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder405.png" alt="Unable to Identify AWB">
+                    </div>
+                    <p><strong>Step 5:</strong> Click on <strong>Unable to Identify AWB Number</strong> for shipments
+                        that cannot be scanned.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder406.png" alt="Scan Flyer Code">
+                    </div>
+                    <p><strong>Step 6:</strong> Scan the <strong>Flyer Code</strong> available on the shipment. If
+                        unavailable, click on <strong>Did not find packet ID</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder407.png" alt="Scan QR Code">
+                    </div>
+                    <p><strong>Step 7:</strong> A <strong>QR code</strong> will be displayed on the screen. Use your
+                        mobile device to scan the code.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder408.png" alt="Update and Submit Details">
+                    </div>
+                    <p><strong>Step 8:</strong> Update all relevant details as displayed on the screen and click on
+                        <strong>Submit</strong>.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder409.png" alt="Request Submitted">
+                    </div>
+                    <p><strong>Step 9:</strong> Once submitted, your remarks will be displayed under <strong>Request
+                            Submitted</strong> for tracking and closure.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Identify Exception</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Analyze Issue</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Assign to Responsible Team</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Take Corrective Action</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Verify Resolution</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Close Exception</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- VALINOR SECTION -->
+        <div id="valinor" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🖥 Valinor Login Portal</h2>
+
+            <div class="subsection-nav">
+                <button class="subsection-btn" onclick="showSubsection('val', 'access', this)">🔐 Access &
+                    Login</button>
+                <button class="subsection-btn" onclick="showSubsection('val', 'support', this)">🔐 Support Portal
+                </button>
+            </div>
+
+            <div id="val-access" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">🔐 Access & Login</h3>
+                <div class="sop-step">
+                    <h3>Valinor Portal Access</h3>
+
+                    <p><strong>Valinor Portal:</strong> Steps a user follows to securely log in to the Valinor portal,
+                        complete KYC details, and access linked systems like the Ecom and Support Portals.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder601.png" alt="Send OTP">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"MM Reaching Hub"</strong> → Navigate to <strong>Hub
+                            Portal</strong>.<br>
+                        Enter your <strong>contact number</strong> and click on <strong>Send OTP</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder602.png" alt="Enter OTP">
+                    </div>
+                    <p><strong>Step 2:</strong> An OTP will be sent to your registered mobile number. Enter the
+                        <strong>OTP</strong> received.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder603.png" alt="Submit OTP">
+                    </div>
+                    <p><strong>Step 3:</strong> Click on <strong>Submit</strong> to verify your credentials and log in.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder604.png" alt="Access Portals">
+                    </div>
+                    <p><strong>Step 4:</strong> After login, you will be redirected to the <strong>Ecom Portal</strong>
+                        and the <strong>Support Portal</strong>.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder605.png" alt="KYC Pending">
+                    </div>
+                    <p><strong>Step 5:</strong> For KYC completion, click on <strong>KYC Pending</strong> after logging
+                        into Valinor.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder606.png" alt="Update Personal Info">
+                    </div>
+                    <p><strong>Step 6:</strong> Click on <strong>Update Personal Info</strong> to review or modify your
+                        details.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder607.png" alt="Update KYC">
+                    </div>
+                    <p><strong>Step 7:</strong> A new page will open. Update all <strong>mandatory details</strong> and
+                        click <strong>Update</strong> to save your information.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder608.png" alt="Logout Valinor">
+                    </div>
+                    <p><strong>Step 8:</strong> To log out, click the <strong>three-dot icon (⋮)</strong> and select
+                        <strong>Logout</strong>.<br>
+                        Logging out of Valinor will automatically log you out of all connected portals.
+                    </p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Send OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter OTP</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Submit</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Access Portals</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">KYC Pending</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Update Info</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Click Update</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="val-support" class="sop-content">
+                <h3 style="color: #764ba2; margin-bottom: 25px;">💼 Support Portal</h3>
+                <div class="sop-step">
+                    <h3>Support Portal Access</h3>
+
+                    <p><strong>Support Portal:</strong> The portal used to manage and track rider information, payouts,
+                        orders, availability, and deductions efficiently.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder701.png" alt="Access Support Portal">
+                    </div>
+                    <p><strong>Step 1:</strong> Click on <strong>"Support Portal"</strong> and navigate to the
+                        <strong>Support Portal</strong> home page to begin rider management.
+                    </p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder702.png" alt="Enter Rider ID">
+                    </div>
+                    <p><strong>Step 2:</strong> Enter the <strong>contact number</strong> or <strong>Rider ID</strong>,
+                        then click <strong>Submit</strong> to fetch rider details.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder703.png" alt="Rider Details Displayed">
+                    </div>
+                    <p><strong>Step 3:</strong> The <strong>rider details</strong> (name, ID, zone, and status) will be
+                        displayed on the screen.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder704.png" alt="Payout Details">
+                    </div>
+                    <p><strong>Step 4:</strong> Click on <strong>Payout</strong> to view the rider’s payment summary,
+                        including total earnings and pending payouts.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder705.png" alt="Availability Status">
+                    </div>
+                    <p><strong>Step 5:</strong> Click on <strong>Availability</strong> to check the rider’s current
+                        working status and assigned regions.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder706.png" alt="Prime Orders Check">
+                    </div>
+                    <p><strong>Step 6:</strong> Under <strong>Availability</strong>, enter the <strong>Rider ID</strong>
+                        and click <strong>Submit</strong> to check for prime orders and assignments.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder707.png" alt="Deduction Details">
+                    </div>
+                    <p><strong>Step 7:</strong> Click on <strong>Deduction</strong> to view details of any deductions or
+                        penalties applied to the rider.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder708.png" alt="Rider Orders">
+                    </div>
+                    <p><strong>Step 8:</strong> Click on <strong>Orders</strong> to review the rider’s active and
+                        completed deliveries.</p>
+
+                    <div class="step-image-container">
+                        <img src="https://i.postimg.cc/placeholder709.png" alt="Rider Referrals">
+                    </div>
+                    <p><strong>Step 9:</strong> Click on <strong>Refers</strong> to view the total number of referrals
+                        made by the rider and their referral status.</p>
+
+                    <div class="route-map">
+                        <h4>🗺️ Process Flow:</h4>
+                        <div class="route-steps">
+                            <div class="route-step">Access Support Portal</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Enter Rider ID / Contact</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">View Rider Details</div>
+                            <div class="route-arrow">→</div>
+                            <div class="route-step">Access Functions (Payout / Availability / Orders / Deductions /
+                                Refers)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- GLOSSARY SECTION -->
+        <div id="glossary" class="content-area">
+            <button class="back-btn" onclick="hideAllSections()">← Back to Main Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🔖 Glossary & Definitions</h2>
+
+            <button class="subsection-btn" style="margin-bottom: 20px; background: #667eea; color: white;">
+                📖 Key Terms
+            </button>
+
+            <div
+                style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <th style="padding: 15px; text-align: left; font-size: 1.1em;">Term / Acronyms</th>
+                            <th style="padding: 15px; text-align: left; font-size: 1.1em;">Full Form / Meaning</th>
+                            <th style="padding: 15px; text-align: left; font-size: 1.1em;">Description</th>
+                            <th style="padding: 15px; text-align: center; font-size: 1.1em;">Link to SOP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px; font-weight: 600;">AWB</td>
+                            <td style="padding: 15px;">Air Waybill</td>
+                            <td style="padding: 15px;">Unique tracking number assigned to each shipment for
+                                identification and tracking purposes.</td>
+                            <td style="padding: 15px; text-align: center;">
+                                <button class="detail-btn" style="padding: 8px 16px; font-size: 0.9em;"
+                                    onclick="navigateToSOP('hub-portal','inbound','master-manifest')">
+                                    👉 Go to SOP
+                                </button>
+                            </td>
+                        </tr>
+                        <script>
+                            function showSection(sectionId) {
+                                const allSections = document.querySelectorAll('.content-area');
+                                allSections.forEach(section => {
+                                    section.classList.remove('active');
+                                });
+
+                                const allButtons = document.querySelectorAll('.main-btn');
+                                allButtons.forEach(btn => {
+                                    btn.classList.remove('active');
+                                });
+
+                                const selectedSection = document.getElementById(sectionId);
+                                if (selectedSection) {
+                                    selectedSection.classList.add('active');
+                                }
+
+                                event.target.closest('.main-btn').classList.add('active');
+                            }
+
+                            function hideAllSections() {
+                                const allSections = document.querySelectorAll('.content-area');
+                                allSections.forEach(section => {
+                                    section.classList.remove('active');
+                                });
+
+                                const allButtons = document.querySelectorAll('.main-btn');
+                                allButtons.forEach(btn => {
+                                    btn.classList.remove('active');
+                                });
+                            }
+
+                            function showSubsection(section, subsection, button) {
+                                const parent = button.closest('.subsection-nav');
+                                const allSubButtons = parent.querySelectorAll('.subsection-btn');
+                                allSubButtons.forEach(btn => {
+                                    btn.classList.remove('active');
+                                });
+
+                                button.classList.add('active');
+
+                                const allContents = button.closest('.content-area').querySelectorAll('.sop-content');
+                                allContents.forEach(content => {
+                                    content.classList.remove('active');
+                                });
+
+                                const selectedContent = document.getElementById(`${section}-${subsection}`);
+                                if (selectedContent) {
+                                    selectedContent.classList.add('active');
+
+                                    const allDetails = selectedContent.querySelectorAll('.sop-detail');
+                                    allDetails.forEach(detail => {
+                                        detail.style.display = 'none';
+                                    });
+
+                                    const detailButtons = selectedContent.querySelectorAll('.detail-btn');
+                                    detailButtons.forEach(btn => {
+                                        btn.classList.remove('active');
+                                    });
+                                }
+                            }
+
+                            function showDetail(subsection, detail, button) {
+                                const parent = button.closest('.detail-nav');
+                                const allDetailButtons = parent.querySelectorAll('.detail-btn');
+                                allDetailButtons.forEach(btn => {
+                                    btn.classList.remove('active');
+                                });
+
+                                button.classList.add('active');
+
+                                const sopContent = button.closest('.sop-content');
+                                const allDetails = sopContent.querySelectorAll('.sop-detail');
+                                allDetails.forEach(d => {
+                                    d.style.display = 'none';
+                                });
+
+                                const selectedDetail = document.getElementById(`${subsection}-${detail}`);
+                                if (selectedDetail) {
+                                    selectedDetail.style.display = 'block';
+                                }
+                            }
+
+                            function navigateToSOP(section, subsection) {
+                                hideAllSections();
+
+                                const sectionElement = document.getElementById(section);
+                                if (sectionElement) {
+                                    sectionElement.classList.add('active');
+
+                                    const mainBtn = document.querySelector(`[onclick="showSection('${section}')"]`);
+                                    if (mainBtn) {
+                                        mainBtn.classList.add('active');
+                                    }
+
+                                    setTimeout(() => {
+                                        const subsectionBtn = sectionElement.querySelector(`[onclick*="'${subsection}'"]`);
+                                        if (subsectionBtn) {
+                                            subsectionBtn.click();
+
+                                            subsectionBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                        }
+                                    }, 100);
+                                }
+                            }
+
+                            function saveAllChanges() {
+                                const notification = document.getElementById('notification');
+                                notification.classList.add('show');
+                                setTimeout(() => {
+                                    notification.classList.remove('show');
+                                }, 3000);
+                            }
+
+                            function downloadHTML() {
+                                const html = document.documentElement.outerHTML;
+                                const blob = new Blob([html], { type: 'text/html' });
+                                const link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.download = 'Master_SOP_Handbook.html';
+                                link.click();
+                            }
+
+                        </script>
+</body>
+
+</html>
